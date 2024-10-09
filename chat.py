@@ -21,19 +21,19 @@ def get_prompt(instruction: str, history: List[str] = None) -> str:
     prompt = ""
 
     if model_in_use == "orca":
-        prompt = f"### System:\n{system}\n\n### User:\n"
+        prompt = f"### System:\n{system} "
 
         if len(history) > 0:
-            prompt += f"This is the conversation history: {''.join(history)}. Now answer the question: "
+            prompt += f"Take this context into account when answering the question: {''.join(history)}"
 
-        prompt += f"{instruction}\n\n### Response:\n"
+        prompt += f"\n\n### User:\n{instruction}\n\n### Response:\n"
     elif model_in_use == "llama2":
-        prompt = f"<s>[INST] <<SYS>>\n{system}\n<</SYS>>"
+        prompt = f"<s>[INST] <<SYS>>\n{system} "
 
         if len(history) > 0:
-            prompt += f"This is the conversation history: {''.join(history)}. Now answer the question: "
+            prompt += f"Take this context into account when answering the question: {''.join(history)}"
 
-        prompt += f"\n\n{instruction} [/INST]"
+        prompt += f"\n<</SYS>>\n\n{instruction} [/INST]"
     print(prompt)
     return prompt
 
